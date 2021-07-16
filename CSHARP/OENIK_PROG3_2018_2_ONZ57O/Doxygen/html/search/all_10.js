@@ -1,0 +1,10 @@
+var searchData=
+[
+  ['ugyved',['ugyved',['../class_borton_1_1_data_1_1_i_t_e_l_e_t.html#ad21a96cdc1033bfcca989cca985cecad',1,'Borton::Data::ITELET']]],
+  ['update',['Update',['../interface_borton_1_1_logic_1_1_i_logic.html#abe4765a05d74343815f25367aa853561',1,'Borton.Logic.ILogic.Update()'],['../class_borton_1_1_logic_1_1_logic.html#af76a2f8f4db7ac352133fc50fc7dbe60',1,'Borton.Logic.Logic.Update()'],['../class_borton_1_1_repository_1_1_bortonor_repository.html#a52a4f4a405091248c946c1fef910af6d',1,'Borton.Repository.BortonorRepository.Update()'],['../class_borton_1_1_repository_1_1_buntett_repository.html#ae115e6099145b8553af276f58eb41588',1,'Borton.Repository.BuntettRepository.Update()'],['../class_borton_1_1_repository_1_1_elhelyezes_repository.html#a8210eb0579a3aee5e65b1447a009d4dc',1,'Borton.Repository.ElhelyezesRepository.Update()'],['../class_borton_1_1_repository_1_1_fegyenc_repository.html#ab9e378934198fea34f7a2210a37bc191',1,'Borton.Repository.FegyencRepository.Update()'],['../interface_borton_1_1_repository_1_1_i_repository.html#a00dbc1bdaae4763b08ebf5dbdae9af01',1,'Borton.Repository.IRepository.Update()'],['../class_borton_1_1_repository_1_1_itelet_repository.html#aed00c60ad56bb828eb65958a8939fa75',1,'Borton.Repository.IteletRepository.Update()']]],
+  ['update_5fbortonor',['Update_BORTONOR',['../class_borton_1_1_logic_1_1_tests_1_1_logic_test.html#a32c8879358e5fa641b92793264be48d6',1,'Borton::Logic::Tests::LogicTest']]],
+  ['update_5fbuntett',['Update_BUNTETT',['../class_borton_1_1_logic_1_1_tests_1_1_logic_test.html#ae613b2bceeb3a0615f070f9e7b45b586',1,'Borton::Logic::Tests::LogicTest']]],
+  ['update_5felhelyezes',['Update_ELHELYEZES',['../class_borton_1_1_logic_1_1_tests_1_1_logic_test.html#a58bdf6dc6ef52918746648138bd17323',1,'Borton::Logic::Tests::LogicTest']]],
+  ['update_5ffegyenc',['Update_FEGYENC',['../class_borton_1_1_logic_1_1_tests_1_1_logic_test.html#ac364324d7cb2e142582013ad185988e4',1,'Borton::Logic::Tests::LogicTest']]],
+  ['update_5fitelet',['Update_ITELET',['../class_borton_1_1_logic_1_1_tests_1_1_logic_test.html#aa8e2b4a876e273fd71bb9f6619823ba7',1,'Borton::Logic::Tests::LogicTest']]]
+];

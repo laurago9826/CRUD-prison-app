@@ -1,0 +1,371 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BortonModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BORTONOR">
+          <Key>
+            <PropertyRef Name="bortonor_ID" />
+          </Key>
+          <Property Name="bortonor_ID" Type="numeric" Precision="3" Scale="0" Nullable="false" />
+          <Property Name="munka_kezdete" Type="date" />
+          <Property Name="szuletesi_datum" Type="date" />
+          <Property Name="szuletesi_hely" Type="varchar" MaxLength="25" />
+          <Property Name="nev" Type="varchar" MaxLength="30" />
+          <Property Name="jelveny_szam" Type="numeric" Precision="10" Scale="0" />
+        </EntityType>
+        <EntityType Name="BUNTETT">
+          <Key>
+            <PropertyRef Name="buntett_ID" />
+          </Key>
+          <Property Name="buntett_ID" Type="numeric" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="letartoztato_szemely" Type="varchar" MaxLength="25" />
+          <Property Name="buntett_leiras" Type="varchar" MaxLength="50" />
+          <Property Name="aldozat" Type="varchar" MaxLength="25" />
+          <Property Name="elkovetes_helye" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="ELHELYEZES">
+          <Key>
+            <PropertyRef Name="cellaszam" />
+            <PropertyRef Name="agy" />
+          </Key>
+          <Property Name="cellaszam" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="agy" Type="numeric" Precision="1" Scale="0" Nullable="false" />
+          <Property Name="reszleg" Type="varchar" MaxLength="1" />
+          <Property Name="emelet" Type="numeric" Precision="1" Scale="0" />
+        </EntityType>
+        <EntityType Name="FEGYENC">
+          <Key>
+            <PropertyRef Name="fegyenc_ID" />
+          </Key>
+          <Property Name="fegyenc_ID" Type="numeric" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="nev" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="nem" Type="varchar" MaxLength="6" />
+          <Property Name="szuletesi_datum" Type="date" />
+          <Property Name="szuletesi_hely" Type="varchar" MaxLength="20" />
+          <Property Name="letoltesi_ido_kezdete" Type="date" />
+          <Property Name="itelet_ID" Type="numeric" Precision="5" Scale="0" />
+          <Property Name="cellaszam" Type="numeric" Precision="4" Scale="0" />
+          <Property Name="agy" Type="numeric" Precision="1" Scale="0" />
+          <Property Name="bortonor_ID" Type="numeric" Precision="3" Scale="0" />
+        </EntityType>
+        <EntityType Name="ITELET">
+          <Key>
+            <PropertyRef Name="itelet_ID" />
+          </Key>
+          <Property Name="itelet_ID" Type="numeric" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="itelet_datuma" Type="date" />
+          <Property Name="letoltendo_ido" Type="numeric" Precision="2" Scale="0" />
+          <Property Name="biro" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="ugyved" Type="varchar" MaxLength="25" />
+          <Property Name="buntett_ID" Type="numeric" Precision="5" Scale="0" />
+        </EntityType>
+        <Association Name="bortonor_fk">
+          <End Role="BORTONOR" Type="Self.BORTONOR" Multiplicity="0..1" />
+          <End Role="FEGYENC" Type="Self.FEGYENC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BORTONOR">
+              <PropertyRef Name="bortonor_ID" />
+            </Principal>
+            <Dependent Role="FEGYENC">
+              <PropertyRef Name="bortonor_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="buntett_fk">
+          <End Role="BUNTETT" Type="Self.BUNTETT" Multiplicity="0..1" />
+          <End Role="ITELET" Type="Self.ITELET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BUNTETT">
+              <PropertyRef Name="buntett_ID" />
+            </Principal>
+            <Dependent Role="ITELET">
+              <PropertyRef Name="buntett_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="cellaszam_agy_fk">
+          <End Role="ELHELYEZES" Type="Self.ELHELYEZES" Multiplicity="0..1" />
+          <End Role="FEGYENC" Type="Self.FEGYENC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ELHELYEZES">
+              <PropertyRef Name="cellaszam" />
+              <PropertyRef Name="agy" />
+            </Principal>
+            <Dependent Role="FEGYENC">
+              <PropertyRef Name="cellaszam" />
+              <PropertyRef Name="agy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="itelet_fk">
+          <End Role="ITELET" Type="Self.ITELET" Multiplicity="0..1" />
+          <End Role="FEGYENC" Type="Self.FEGYENC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ITELET">
+              <PropertyRef Name="itelet_ID" />
+            </Principal>
+            <Dependent Role="FEGYENC">
+              <PropertyRef Name="itelet_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BortonModelStoreContainer">
+          <EntitySet Name="BORTONOR" EntityType="Self.BORTONOR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BUNTETT" EntityType="Self.BUNTETT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ELHELYEZES" EntityType="Self.ELHELYEZES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FEGYENC" EntityType="Self.FEGYENC" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ITELET" EntityType="Self.ITELET" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="bortonor_fk" Association="Self.bortonor_fk">
+            <End Role="BORTONOR" EntitySet="BORTONOR" />
+            <End Role="FEGYENC" EntitySet="FEGYENC" />
+          </AssociationSet>
+          <AssociationSet Name="buntett_fk" Association="Self.buntett_fk">
+            <End Role="BUNTETT" EntitySet="BUNTETT" />
+            <End Role="ITELET" EntitySet="ITELET" />
+          </AssociationSet>
+          <AssociationSet Name="cellaszam_agy_fk" Association="Self.cellaszam_agy_fk">
+            <End Role="ELHELYEZES" EntitySet="ELHELYEZES" />
+            <End Role="FEGYENC" EntitySet="FEGYENC" />
+          </AssociationSet>
+          <AssociationSet Name="itelet_fk" Association="Self.itelet_fk">
+            <End Role="ITELET" EntitySet="ITELET" />
+            <End Role="FEGYENC" EntitySet="FEGYENC" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BortonModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BORTONOR">
+          <Key>
+            <PropertyRef Name="bortonor_ID" />
+          </Key>
+          <Property Name="bortonor_ID" Type="Decimal" Precision="3" Scale="0" Nullable="false" />
+          <Property Name="munka_kezdete" Type="DateTime" Precision="0" />
+          <Property Name="szuletesi_datum" Type="DateTime" Precision="0" />
+          <Property Name="szuletesi_hely" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="nev" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="jelveny_szam" Type="Decimal" Precision="10" Scale="0" />
+          <NavigationProperty Name="FEGYENC" Relationship="Self.bortonor_fk" FromRole="BORTONOR" ToRole="FEGYENC" />
+        </EntityType>
+        <EntityType Name="BUNTETT">
+          <Key>
+            <PropertyRef Name="buntett_ID" />
+          </Key>
+          <Property Name="buntett_ID" Type="Decimal" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="letartoztato_szemely" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="buntett_leiras" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="aldozat" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="elkovetes_helye" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ITELET" Relationship="Self.buntett_fk" FromRole="BUNTETT" ToRole="ITELET" />
+        </EntityType>
+        <EntityType Name="ELHELYEZES">
+          <Key>
+            <PropertyRef Name="cellaszam" />
+            <PropertyRef Name="agy" />
+          </Key>
+          <Property Name="cellaszam" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="agy" Type="Decimal" Precision="1" Scale="0" Nullable="false" />
+          <Property Name="reszleg" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="emelet" Type="Decimal" Precision="1" Scale="0" />
+          <NavigationProperty Name="FEGYENC" Relationship="Self.cellaszam_agy_fk" FromRole="ELHELYEZES" ToRole="FEGYENC" />
+        </EntityType>
+        <EntityType Name="FEGYENC">
+          <Key>
+            <PropertyRef Name="fegyenc_ID" />
+          </Key>
+          <Property Name="fegyenc_ID" Type="Decimal" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="nev" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nem" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="szuletesi_datum" Type="DateTime" Precision="0" />
+          <Property Name="szuletesi_hely" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="letoltesi_ido_kezdete" Type="DateTime" Precision="0" />
+          <Property Name="itelet_ID" Type="Decimal" Precision="5" Scale="0" />
+          <Property Name="cellaszam" Type="Decimal" Precision="4" Scale="0" />
+          <Property Name="agy" Type="Decimal" Precision="1" Scale="0" />
+          <Property Name="bortonor_ID" Type="Decimal" Precision="3" Scale="0" />
+          <NavigationProperty Name="BORTONOR" Relationship="Self.bortonor_fk" FromRole="FEGYENC" ToRole="BORTONOR" />
+          <NavigationProperty Name="ELHELYEZES" Relationship="Self.cellaszam_agy_fk" FromRole="FEGYENC" ToRole="ELHELYEZES" />
+          <NavigationProperty Name="ITELET" Relationship="Self.itelet_fk" FromRole="FEGYENC" ToRole="ITELET" />
+        </EntityType>
+        <EntityType Name="ITELET">
+          <Key>
+            <PropertyRef Name="itelet_ID" />
+          </Key>
+          <Property Name="itelet_ID" Type="Decimal" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="itelet_datuma" Type="DateTime" Precision="0" />
+          <Property Name="letoltendo_ido" Type="Decimal" Precision="2" Scale="0" />
+          <Property Name="biro" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ugyved" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="buntett_ID" Type="Decimal" Precision="5" Scale="0" />
+          <NavigationProperty Name="BUNTETT" Relationship="Self.buntett_fk" FromRole="ITELET" ToRole="BUNTETT" />
+          <NavigationProperty Name="FEGYENC" Relationship="Self.itelet_fk" FromRole="ITELET" ToRole="FEGYENC" />
+        </EntityType>
+        <Association Name="bortonor_fk">
+          <End Role="BORTONOR" Type="Self.BORTONOR" Multiplicity="0..1" />
+          <End Role="FEGYENC" Type="Self.FEGYENC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BORTONOR">
+              <PropertyRef Name="bortonor_ID" />
+            </Principal>
+            <Dependent Role="FEGYENC">
+              <PropertyRef Name="bortonor_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="buntett_fk">
+          <End Role="BUNTETT" Type="Self.BUNTETT" Multiplicity="0..1" />
+          <End Role="ITELET" Type="Self.ITELET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BUNTETT">
+              <PropertyRef Name="buntett_ID" />
+            </Principal>
+            <Dependent Role="ITELET">
+              <PropertyRef Name="buntett_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="cellaszam_agy_fk">
+          <End Role="ELHELYEZES" Type="Self.ELHELYEZES" Multiplicity="0..1" />
+          <End Role="FEGYENC" Type="Self.FEGYENC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ELHELYEZES">
+              <PropertyRef Name="cellaszam" />
+              <PropertyRef Name="agy" />
+            </Principal>
+            <Dependent Role="FEGYENC">
+              <PropertyRef Name="cellaszam" />
+              <PropertyRef Name="agy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="itelet_fk">
+          <End Role="ITELET" Type="Self.ITELET" Multiplicity="0..1" />
+          <End Role="FEGYENC" Type="Self.FEGYENC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ITELET">
+              <PropertyRef Name="itelet_ID" />
+            </Principal>
+            <Dependent Role="FEGYENC">
+              <PropertyRef Name="itelet_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BortonEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BORTONOR" EntityType="Self.BORTONOR" />
+          <EntitySet Name="BUNTETT" EntityType="Self.BUNTETT" />
+          <EntitySet Name="ELHELYEZES" EntityType="Self.ELHELYEZES" />
+          <EntitySet Name="FEGYENC" EntityType="Self.FEGYENC" />
+          <EntitySet Name="ITELET" EntityType="Self.ITELET" />
+          <AssociationSet Name="bortonor_fk" Association="Self.bortonor_fk">
+            <End Role="BORTONOR" EntitySet="BORTONOR" />
+            <End Role="FEGYENC" EntitySet="FEGYENC" />
+          </AssociationSet>
+          <AssociationSet Name="buntett_fk" Association="Self.buntett_fk">
+            <End Role="BUNTETT" EntitySet="BUNTETT" />
+            <End Role="ITELET" EntitySet="ITELET" />
+          </AssociationSet>
+          <AssociationSet Name="cellaszam_agy_fk" Association="Self.cellaszam_agy_fk">
+            <End Role="ELHELYEZES" EntitySet="ELHELYEZES" />
+            <End Role="FEGYENC" EntitySet="FEGYENC" />
+          </AssociationSet>
+          <AssociationSet Name="itelet_fk" Association="Self.itelet_fk">
+            <End Role="ITELET" EntitySet="ITELET" />
+            <End Role="FEGYENC" EntitySet="FEGYENC" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BortonModelStoreContainer" CdmEntityContainer="BortonEntities">
+          <EntitySetMapping Name="BORTONOR">
+            <EntityTypeMapping TypeName="BortonModel.BORTONOR">
+              <MappingFragment StoreEntitySet="BORTONOR">
+                <ScalarProperty Name="bortonor_ID" ColumnName="bortonor_ID" />
+                <ScalarProperty Name="munka_kezdete" ColumnName="munka_kezdete" />
+                <ScalarProperty Name="szuletesi_datum" ColumnName="szuletesi_datum" />
+                <ScalarProperty Name="szuletesi_hely" ColumnName="szuletesi_hely" />
+                <ScalarProperty Name="nev" ColumnName="nev" />
+                <ScalarProperty Name="jelveny_szam" ColumnName="jelveny_szam" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BUNTETT">
+            <EntityTypeMapping TypeName="BortonModel.BUNTETT">
+              <MappingFragment StoreEntitySet="BUNTETT">
+                <ScalarProperty Name="buntett_ID" ColumnName="buntett_ID" />
+                <ScalarProperty Name="letartoztato_szemely" ColumnName="letartoztato_szemely" />
+                <ScalarProperty Name="buntett_leiras" ColumnName="buntett_leiras" />
+                <ScalarProperty Name="aldozat" ColumnName="aldozat" />
+                <ScalarProperty Name="elkovetes_helye" ColumnName="elkovetes_helye" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ELHELYEZES">
+            <EntityTypeMapping TypeName="BortonModel.ELHELYEZES">
+              <MappingFragment StoreEntitySet="ELHELYEZES">
+                <ScalarProperty Name="cellaszam" ColumnName="cellaszam" />
+                <ScalarProperty Name="agy" ColumnName="agy" />
+                <ScalarProperty Name="reszleg" ColumnName="reszleg" />
+                <ScalarProperty Name="emelet" ColumnName="emelet" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FEGYENC">
+            <EntityTypeMapping TypeName="BortonModel.FEGYENC">
+              <MappingFragment StoreEntitySet="FEGYENC">
+                <ScalarProperty Name="fegyenc_ID" ColumnName="fegyenc_ID" />
+                <ScalarProperty Name="nev" ColumnName="nev" />
+                <ScalarProperty Name="nem" ColumnName="nem" />
+                <ScalarProperty Name="szuletesi_datum" ColumnName="szuletesi_datum" />
+                <ScalarProperty Name="szuletesi_hely" ColumnName="szuletesi_hely" />
+                <ScalarProperty Name="letoltesi_ido_kezdete" ColumnName="letoltesi_ido_kezdete" />
+                <ScalarProperty Name="itelet_ID" ColumnName="itelet_ID" />
+                <ScalarProperty Name="cellaszam" ColumnName="cellaszam" />
+                <ScalarProperty Name="agy" ColumnName="agy" />
+                <ScalarProperty Name="bortonor_ID" ColumnName="bortonor_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ITELET">
+            <EntityTypeMapping TypeName="BortonModel.ITELET">
+              <MappingFragment StoreEntitySet="ITELET">
+                <ScalarProperty Name="itelet_ID" ColumnName="itelet_ID" />
+                <ScalarProperty Name="itelet_datuma" ColumnName="itelet_datuma" />
+                <ScalarProperty Name="letoltendo_ido" ColumnName="letoltendo_ido" />
+                <ScalarProperty Name="biro" ColumnName="biro" />
+                <ScalarProperty Name="ugyved" ColumnName="ugyved" />
+                <ScalarProperty Name="buntett_ID" ColumnName="buntett_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
